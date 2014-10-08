@@ -1,4 +1,4 @@
-public class compNode<E>{
+public class compNode <E> implements Comparable{
 
 	protected int computer;
 	protected int time;
@@ -29,6 +29,23 @@ public class compNode<E>{
 		location = l;
 		next = n;
 	}
+
+	public boolean compareTo(compNode<E> other){
+
+		boolean sameComp = (computer == other.getComputer());
+		boolean sameTime = (time == other.getTime());
+
+		return (sameCompt && sameTime);
+	}
+
+	public compNode<E> clone(){
+
+		compNode<E> copy = new compNode(computer, time, location);
+
+		return copy;
+
+	}
+
 
 	/** Returns the computer of this node */
 	public int getComputer(){ return computer; }
