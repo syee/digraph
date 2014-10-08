@@ -71,4 +71,6 @@ public class compNode <E> implements Comparable{
 	/** Sets the location of the node in the adjacency list */
 	public void setLocation(compNode<E> l) { location = l; }
 
+	public boolean checkDiscovered() { return discovered; }
+
 }

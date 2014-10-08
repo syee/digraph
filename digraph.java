@@ -40,6 +40,7 @@ public class Digraph<E>{
 		compNode<E> firstClone = first.clone();
 		compNode<E> secondClone = second.clone();
 
+		//I want this to add like it's a linked list
 		first.add(secondClone);
 		second.add(firstClone);
 
@@ -55,10 +56,52 @@ public class Digraph<E>{
 			tempOld.add(firstClone);
 		}
 
-
+		if (computerList[comp2] == null){
+			compNode<E> temp = secondClone;
+			computerList[comp2] = temp;
+		}
+		else{
+			compNode<E> tempOld = computerList[comp2];
+			compNode<E> tempNew = firstClone;
+			computerList[comp2] = tempNew;
+			tempOld = tempOld.getLocation();
+			tempOld.add(secondClone);
+		}
 
 	}
 
+
+	public boolean BFS(compNode<E> start){
+		start.makeDiscovered();
+
+		//How do I make this queue sizeless?
+		Queue<E> BFSQueue = new LinkedList();
+
+		BFSQueue.add(start);
+		while (!BFSQueue.isEmpty()){
+			compNode<E> temp = BFSQueue.remove();
+			while (temp.getNext() != null){
+				temp = temp.getNext();
+				if (!temp.checkDiscovered()){
+					if (temp.getComputer() == start.getComputer()){
+						if (temp.getTime() <= endTime){
+							return true;
+						}
+						else{
+							return false;
+						}
+					}
+					temp.makeDiscovered();
+					BFSQueue.add(temp)
+
+				}
+			}
+
+
+		}
+
+
+	}
 
 
 
