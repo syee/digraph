@@ -2,6 +2,7 @@ public class compNode <E> implements Comparable{
 
 	protected int computer;
 	protected int time;
+	protected boolean discovered = false;
 	protected compNode<E> location;		
 	protected compNode<E> next;
 
@@ -46,6 +47,11 @@ public class compNode <E> implements Comparable{
 
 	}
 
+	/** Mark a node as discovered */
+	public void makeDiscovered(){ discovered = true; }
+
+	/** Mark a node as not discovered */
+	public void makeHidden(){ discovered = false; }
 
 	/** Returns the computer of this node */
 	public int getComputer(){ return computer; }
