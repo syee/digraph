@@ -71,7 +71,32 @@ public class Digraph<E>{
 	}
 
 
-	public boolean BFS(compNode<E> start){
+	public boolean checkVirus(int compStart, int compEnd, int timeStart, int timeEnd){
+
+		compNode<E> start = findStart(compStart, timeStart);
+		return BFS(start, compEnd, timeEnd);
+
+	}
+
+	public compNode<E> findStart(int comp, int time){
+
+		compNode<E> start;
+		for (int i = 0; i < size; i++){
+
+			compNode<E> temp = nodeGraph[i];
+			if (temp.getComputer() == comp){
+				if (temp.getTime() >= time){
+					start = nodeGraph[i];
+					return start;
+				}
+			}
+
+		}
+
+	}
+
+
+	public boolean BFS(compNode<E> start, int compEnd, int timeEnd){
 		start.makeDiscovered();
 
 		//How do I make this queue sizeless?
@@ -83,8 +108,8 @@ public class Digraph<E>{
 			while (temp.getNext() != null){
 				temp = temp.getNext();
 				if (!temp.checkDiscovered()){
-					if (temp.getComputer() == start.getComputer()){
-						if (temp.getTime() <= endTime){
+					if (temp.getComputer() == compEnd){
+						if (temp.getTime() <= timeEnd){
 							return true;
 						}
 						else{
@@ -96,11 +121,8 @@ public class Digraph<E>{
 
 				}
 			}
-
-
 		}
-
-
+		return false;
 	}
 
 
