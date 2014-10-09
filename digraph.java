@@ -5,15 +5,14 @@ import java.util.Queue;
 
 public class Digraph<E>{
 
-	int size = 0;
-	int capacity = 10;
+	protected int size = 0;
+	protected int capacity = 10;
 	protected ArrayList<E> nodeGraph = new ArrayList<E>(capacity);
+	protected ArrayList<E> computerList;
+	computerList = new ArrayList<E>(SIZE);
 
-
-	public void add (compNode<E> node){
-
+	public void add (<E> node){
 		if (size == capacity){
-
 			capacity *= 2;
 			ArrayList<E> temp = new ArrayList<E>(capacity);
 			for (int i = 0; i < size; i++){
@@ -21,82 +20,72 @@ public class Digraph<E>{
 			}
 			nodeGraph = temp;
 		}
-
 		nodeGraph[size] = node;
 		node.setLocation(nodeGraph[size]);
 		size++;
-
 	}
 
 
 	public void processTriple(int comp1, int comp2, int time){
 
-		compNode<E> first = new compNode<E>(comp1, time);
-		compNode<E> second = new compNode<E>(comp2, time);
+		E first = new E(comp1, time);
+		E second = new E(comp2, time);
 
 		add(first);
 		add(second);
 
-		compNode<E> firstClone = first.clone();
-		compNode<E> secondClone = second.clone();
+		E firstClone = first.clone();
+		E secondClone = second.clone();
 
 		//I want this to add like it's a linked list
 		first.add(secondClone);
 		second.add(firstClone);
 
 		if (computerList[comp1] == null){
-			compNode<E> temp = firstClone;
-			computerList[comp1] = temp;
+			computerList[comp1] = firstClone;
 		}
 		else{
-			compNode<E> tempOld = computerList[comp1];
-			compNode<E> tempNew = firstClone;
+			E tempOld = computerList[comp1];
+			E tempNew = firstClone;
 			computerList[comp1] = tempNew;
 			tempOld = tempOld.getLocation();
 			tempOld.add(firstClone);
 		}
 
 		if (computerList[comp2] == null){
-			compNode<E> temp = secondClone;
-			computerList[comp2] = temp;
+			computerList[comp2] = secondClone;
 		}
 		else{
-			compNode<E> tempOld = computerList[comp2];
-			compNode<E> tempNew = firstClone;
+			E tempOld = computerList[comp2];
+			E tempNew = secondClone;
 			computerList[comp2] = tempNew;
 			tempOld = tempOld.getLocation();
 			tempOld.add(secondClone);
 		}
-
 	}
 
 
 	public boolean checkVirus(int compStart, int compEnd, int timeStart, int timeEnd){
-
-		compNode<E> start = findStart(compStart, timeStart);
+		E start = findStart(compStart, timeStart);
 		return BFS(start, compEnd, timeEnd);
-
 	}
 
-	public compNode<E> findStart(int comp, int time){
+	public E findStart(int comp, int time){
+		E start;
 
-		compNode<E> start;
 		for (int i = 0; i < size; i++){
-
-			compNode<E> temp = nodeGraph[i];
+			E temp = nodeGraph[i];
 			if (temp.getComputer() == comp){
 				if (temp.getTime() >= time){
 					start = nodeGraph[i];
 					return start;
 				}
 			}
-
 		}
-
 	}
 
 
-	public boolean BFS(compNode<E> start, int compEnd, int timeEnd){
+	public boolean BFS(E start, int compEnd, int timeEnd){
 		start.makeDiscovered();
 
 		//How do I make this queue sizeless?
@@ -104,9 +93,9 @@ public class Digraph<E>{
 
 		BFSQueue.add(start);
 		while (!BFSQueue.isEmpty()){
-			compNode<E> temp = BFSQueue.remove();
+			E temp = BFSQueue.remove();
 			while (temp.getNext() != null){
-				temp = temp.getNext();
+				temp = temp.getNext().getLocation();
 				if (!temp.checkDiscovered()){
 					if (temp.getComputer() == compEnd){
 						if (temp.getTime() <= timeEnd){
@@ -124,20 +113,5 @@ public class Digraph<E>{
 		}
 		return false;
 	}
-
-
-
 };
-
-public class Computers <E> {
-
-	protected ArrayList<E> computerList;
-
-	public Computers(int n){
-
-		computerList = new ArrayList<E>(n);
-
-	}
-
-}
 

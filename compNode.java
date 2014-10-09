@@ -1,10 +1,11 @@
-public class compNode <E> implements Comparable{
+public class compNode implements Comparable{
 
 	protected int computer;
 	protected int time;
 	protected boolean discovered = false;
-	protected compNode<E> location;		
-	protected compNode<E> next;
+	protected compNode location;		
+	protected compNode next;
+	protected compNode last = null;
 
 	public compNode(){
 		this(null, null, null, null);
@@ -17,34 +18,39 @@ public class compNode <E> implements Comparable{
 		next = null;
 	}
 
-	public compNode(int c, int t, compNode<E> l){
-		computer = c;
-		time = t;
-		location = l;
-		next = null;
-	}
+	// public compNode(int c, int t, compNode l){
+	// 	computer = c;
+	// 	time = t;
+	// 	location = l;
+	// 	next = null;
+	// }
 
-	public compNode(int c, int t, compNode<E> l, compNode<E> n){
-		computer = c;
-		time = t;
-		location = l;
-		next = n;
-	}
+	// public compNode(int c, int t, compNode l, compNode n){
+	// 	computer = c;
+	// 	time = t;
+	// 	location = l;
+	// 	next = n;
+	// }
 
-	public boolean compareTo(compNode<E> other){
+	// public boolean compareTo(compNode<E> other){
+	// 	boolean sameComp = (computer == other.getComputer());
+	// 	boolean sameTime = (time == other.getTime());
+	// 	return (sameCompt && sameTime);
+	// }
 
-		boolean sameComp = (computer == other.getComputer());
-		boolean sameTime = (time == other.getTime());
-
-		return (sameCompt && sameTime);
-	}
-
-	public compNode<E> clone(){
-
-		compNode<E> copy = new compNode(computer, time, location);
-
+	public compNode clone(){
+		compNode copy = new compNode(computer, time, location);
 		return copy;
+	}
 
+	public void add(compNode node){
+		if (last == null){
+			last = node;
+		}
+		else{
+			last.setNext(node);
+			last = node;
+		}
 	}
 
 	/** Mark a node as discovered */
@@ -60,16 +66,19 @@ public class compNode <E> implements Comparable{
 	public int getTime() { return time; }
 
 	/** Returns the location of the node in the adjacency list */
-	public compNode<E> getLocation(){ return location; }
+	public compNode getLocation(){ return location; }
 
 	/** Returns the next node of this node */
-	public compNode<E> getNext() { return next; }
+	public compNode getNext() { return next; }
 
 	/** Sets the next node of this node */
-	public void setNext(compNode<E> n) { next = n; }
+	public void setNext(compNode n) { next = n; }
+
+	/** Sets the next node of this node */
+	public void setLast(compNode l) { last = l; }
 
 	/** Sets the location of the node in the adjacency list */
-	public void setLocation(compNode<E> l) { location = l; }
+	public void setLocation(compNode l) { location = l; }
 
 	public boolean checkDiscovered() { return discovered; }
 
