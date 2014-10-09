@@ -4,7 +4,7 @@ public class CompNode{
 	protected int time;
 	protected boolean discovered = false;
 	protected CompNode location;		
-	protected CompNode next;
+	protected CompNode next = null;
 	protected CompNode last = null;
 
 	// public CompNode(){
@@ -46,11 +46,32 @@ public class CompNode{
 	public void add(CompNode node){
 		if (last == null){
 			last = node;
+			setNext(last);
 		}
 		else{
 			last.setNext(node);
 			last = node;
 		}
+	}
+
+	public void printInfo(){
+
+		System.out.println("computer is " + computer);
+		System.out.println("time is " + time);
+		System.out.println("status is " + discovered);
+
+	}
+
+	public void printChain(){
+		System.out.println("Start chain");
+		printInfo();
+		while (next != null){
+			CompNode temp = next;
+			next.printInfo();
+			next = next.getNext();
+		}
+		System.out.println("End chain");
+
 	}
 
 	/** Mark a node as discovered */

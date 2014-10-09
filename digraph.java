@@ -13,7 +13,8 @@ public class Digraph{
 	public Digraph(int n, int m){
 
 		nodeGraph = new CompNode[2*m];
-		computerList = new CompNode[n];
+		computerList = new CompNode[n+1];
+		capacity = 2 * m;
 
 	}
 
@@ -43,19 +44,27 @@ public class Digraph{
 		CompNode firstClone = first.clone();
 		CompNode secondClone = second.clone();
 
+		// first.printInfo();
+		// second.printInfo();
+
 		//I want this to add like it's a linked list
 		first.add(secondClone);
 		second.add(firstClone);
+		System.out.println("this is the first thing for computer 1. It hsould have computer 2");
+		first.printChain();
 
 		if (computerList[comp1] == null){
 			computerList[comp1] = firstClone;
 		}
 		else{
 			CompNode tempOld = computerList[comp1];
-			CompNode tempNew = firstClone;
+			CompNode tempNew = firstClone.clone();
 			computerList[comp1] = tempNew;
 			tempOld = tempOld.getLocation();
 			tempOld.add(firstClone);
+			System.out.println("original computer value for computer 1 is");
+			nodeGraph[1].printChain();
+			System.out.println("ENDINGINGINGINGING original computer value for computer 1 is");
 		}
 
 		if (computerList[comp2] == null){
@@ -63,7 +72,7 @@ public class Digraph{
 		}
 		else{
 			CompNode tempOld = computerList[comp2];
-			CompNode tempNew = secondClone;
+			CompNode tempNew = secondClone.clone();
 			computerList[comp2] = tempNew;
 			tempOld = tempOld.getLocation();
 			tempOld.add(secondClone);
@@ -73,6 +82,10 @@ public class Digraph{
 
 	public boolean checkVirus(int compStart, int compEnd, int timeStart, int timeEnd){
 		CompNode start = findStart(compStart, timeStart);
+
+		System.out.println("start's next is ");
+		start.getNext().printInfo();
+
 		return BFS(start, compEnd, timeEnd);
 	}
 
@@ -84,6 +97,7 @@ public class Digraph{
 			if (temp.getComputer() == comp){
 				if (temp.getTime() >= time){
 					start = nodeGraph[i];
+					System.out.println("start node found is " + start.getComputer() + " " + start.getTime());
 					return start;
 				}
 			}
@@ -94,7 +108,10 @@ public class Digraph{
 
 
 	public boolean BFS(CompNode start, int compEnd, int timeEnd){
+		System.out.println("end comp is " + compEnd + " time is " + timeEnd);
+		start = start.getLocation();
 		start.makeDiscovered();
+		start.printInfo();
 
 		//How do I make this queue sizeless?
 		Queue<CompNode> BFSQueue = new LinkedList();
@@ -102,22 +119,29 @@ public class Digraph{
 		BFSQueue.add(start);
 		while (!BFSQueue.isEmpty()){
 			CompNode temp = BFSQueue.remove();
+
+			System.out.println("outside queues is ");
+			temp.printInfo();
+			temp.printChain();
+
 			while (temp.getNext() != null){
-				temp = temp.getNext().getLocation();
-				if (!temp.checkDiscovered()){
+				
+				temp = temp.getNext();
+				// System.out.println("inside queues is ");
+				// temp.printInfo();
+				if (!temp.getLocation().checkDiscovered()){
 					if (temp.getComputer() == compEnd){
 						if (temp.getTime() <= timeEnd){
+							System.out.println("computer is " + temp.getComputer() + " time is " + temp.getTime());
 							return true;
 						}
-						else{
-							return false;
-						}
 					}
-					temp.makeDiscovered();
+					temp.getLocation().makeDiscovered();
 					BFSQueue.add(temp);
 
 				}
 			}
+			// temp.printInfo();
 		}
 		return false;
 	}
