@@ -63,7 +63,7 @@ public class CompNode{
 	}
 
 	public void printChain(){
-		System.out.println("Start chain");
+		System.out.println("Start chain computer is " + computer);
 		printInfo();
 		while (next != null){
 			CompNode temp = next;

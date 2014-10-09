@@ -6,7 +6,7 @@ import java.util.Queue;
 public class Digraph{
 
 	protected int size = 0;
-	protected int capacity = 10;
+	// protected int capacity = 10;
 	protected CompNode[] nodeGraph;
 	protected CompNode[] computerList;
 
@@ -14,21 +14,28 @@ public class Digraph{
 
 		nodeGraph = new CompNode[2*m];
 		computerList = new CompNode[n+1];
-		capacity = 2 * m;
+		// capacity = 2 * m;
 
 	}
 
 	public void add (CompNode node){
-		if (size == capacity){
-			capacity *= 2;
-			CompNode[] temp = new CompNode[capacity];
-			for (int i = 0; i < size; i++){
-				temp[i] = nodeGraph[i];
-			}
-			nodeGraph = temp;
-		}
+		// if (size == capacity){
+		// 	capacity *= 2;
+		// 	CompNode[] temp = new CompNode[capacity];
+		// 	for (int i = 0; i < size; i++){
+		// 		temp[i] = nodeGraph[i];
+		// 	}
+		// 	nodeGraph = temp;
+		// }
+		System.out.println("size is " + size);
+
+
+
 		nodeGraph[size] = node;
 		node.setLocation(nodeGraph[size]);
+		System.out.println("This is the first node at nodeGraph[0] " + nodeGraph[0].getTime() + " I have location " + nodeGraph[0]);
+		nodeGraph[0].printChain();
+
 		size++;
 	}
 
@@ -41,30 +48,48 @@ public class Digraph{
 		add(first);
 		add(second);
 
+		// System.out.println("first computer is "+ comp1 + " time " + time);
+		// first.printChain();
+		// System.out.println("second computer is "+ comp2 + " time " + time);
+		// second.printChain();
+
 		CompNode firstClone = first.clone();
 		CompNode secondClone = second.clone();
 
-		// first.printInfo();
-		// second.printInfo();
-
-		//I want this to add like it's a linked list
 		first.add(secondClone);
-		second.add(firstClone);
-		System.out.println("this is the first thing for computer 1. It hsould have computer 2");
+
+		System.out.println("I am now printing for the first node");
 		first.printChain();
+
+		second.add(firstClone);
 
 		if (computerList[comp1] == null){
 			computerList[comp1] = firstClone;
+			// System.out.println("first computer is "+ comp1 + " time " + time);
+			// computerList[comp1].printChain();
 		}
 		else{
 			CompNode tempOld = computerList[comp1];
 			CompNode tempNew = firstClone.clone();
 			computerList[comp1] = tempNew;
+
+			// System.out.println("computer list is "+ comp1 + " time " + time);
+			// computerList[comp1].printChain();
+
 			tempOld = tempOld.getLocation();
+
+			System.out.println("Temp Old has location " + tempOld.getLocation());
+
 			tempOld.add(firstClone);
-			System.out.println("original computer value for computer 1 is");
-			nodeGraph[1].printChain();
-			System.out.println("ENDINGINGINGINGING original computer value for computer 1 is");
+
+			// System.out.println("old instance of computer "+ comp1 + " time " + tempOld.getTime());
+			// tempOld.printChain();
+
+
+
+			// System.out.println("original computer value for computer 1 is");
+			// nodeGraph[0].printChain();
+			// System.out.println("ENDINGINGINGINGING original computer value for computer 1 is");
 		}
 
 		if (computerList[comp2] == null){
@@ -84,7 +109,7 @@ public class Digraph{
 		CompNode start = findStart(compStart, timeStart);
 
 		System.out.println("start's next is ");
-		start.getNext().printInfo();
+		start.printInfo();
 
 		return BFS(start, compEnd, timeEnd);
 	}
