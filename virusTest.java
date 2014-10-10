@@ -36,6 +36,8 @@ public class VirusTest{
 
 		}
 
+		nodeGraph.printAll();
+
 		int startComputer, endComputer, startTime, endTime;
 
 		line = textFile.readLine();

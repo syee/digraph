@@ -43,7 +43,7 @@ public class CompNode{
 		return copy;
 	}
 
-	public void add(CompNode node){
+	public void add2(CompNode node){
 		if (last == null){
 			last = node;
 			setNext(last);
@@ -59,16 +59,17 @@ public class CompNode{
 		System.out.println("computer is " + computer);
 		System.out.println("time is " + time);
 		System.out.println("status is " + discovered);
+		System.out.println("location is " + location);
 
 	}
 
 	public void printChain(){
 		System.out.println("Start chain computer is " + computer);
 		printInfo();
-		while (next != null){
-			CompNode temp = next;
-			next.printInfo();
-			next = next.getNext();
+		CompNode temp = next;
+		while (temp != null){
+			temp.printInfo();
+			temp = temp.getNext();
 		}
 		System.out.println("End chain");
 
