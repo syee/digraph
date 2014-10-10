@@ -1,12 +1,20 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+/**
+ * File: Digraph.java
+ * 
+ * This is my implmentation of a class to test if Digraph and CompNode are coded correctly for the given assignment. This program will determine whether a computer could have been infected by a certain time given a virus originating at a specific point in trace data. 
+ *@author Steven Yee
+ *@version 1.0 10/10/14
+ */
+
 import java.io.*;
 
 public class VirusTest{
 	
-	static public boolean startTest(File file){
+	/*
+	 * This method takes in trace data and indicates whether or not a computer would be infected by a certain time.
+	 *@param file where file contains the trace data.
+	 */
+	static public void startTest(File file){
 
 		try{
 		BufferedReader textFile = new BufferedReader(new FileReader(file));
@@ -46,7 +54,7 @@ public class VirusTest{
 		endComputer = Integer.parseInt(virusE[0]);
 		endTime = Integer.parseInt(virusE[1]);
 
-		return nodeGraph.checkVirus(startComputer, endComputer, startTime, endTime);  
+		nodeGraph.checkVirus(startComputer, endComputer, startTime, endTime);  
 
 		}
 		catch(IOException ex){
@@ -56,16 +64,15 @@ public class VirusTest{
 		catch(IOException ex){
 			ex.printStackTrace();
 		}
-
-		return false;
-
-
 	}
 
+	/*
+	 * This is my main for the assignment.
+	 */
 	public static void main (String... aArguments) throws IOException {
 
 		File testing = new File(System.getProperty("user.dir") + "/test");
-		System.out.println("The virus is " + startTest(testing));
+		startTest(testing);
 	}
 
 }
