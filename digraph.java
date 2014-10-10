@@ -171,6 +171,8 @@ public class Digraph{
 			if (temp.getComputer() == comp){
 				if (temp.getTime() >= time){
 					start = nodeGraph[i];
+					// System.out.println("THEITHISHETS");
+					// start.printChain();
 					// System.out.println("start node found is " + start.getComputer() + " " + start.getTime());
 					return start;
 				}
@@ -185,6 +187,7 @@ public class Digraph{
 		// System.out.println("end comp is " + compEnd + " time is " + timeEnd);
 		start = start.getLocation();
 		start.makeDiscovered();
+		start.printChain();
 		// start.printInfo();
 
 		//How do I make this queue sizeless?
@@ -197,13 +200,18 @@ public class Digraph{
 			// System.out.println("outside queues is ");
 			// temp.printInfo();
 			// temp.printChain();
+			// System.out.println("Bigger While");
+			// temp.printInfo();
 
 			while (temp.getNext() != null){
-				
+				temp.printChain();
 				temp = temp.getNext();
 				// System.out.println("inside queues is ");
 				// temp.printInfo();
+				System.out.println("Inner While");
+				
 				if (!temp.getLocation().checkDiscovered()){
+					// temp.printInfo();
 					if (temp.getComputer() == compEnd){
 						if (temp.getTime() <= timeEnd){
 							System.out.println("computer is " + temp.getComputer() + " time is " + temp.getTime());
@@ -211,9 +219,10 @@ public class Digraph{
 						}
 					}
 					temp.getLocation().makeDiscovered();
-					BFSQueue.add(temp);
+					BFSQueue.add(temp.getLocation());
 
 				}
+				
 			}
 			// temp.printInfo();
 		}
