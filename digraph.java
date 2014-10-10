@@ -1,6 +1,6 @@
-import java.util.ArrayList;
+
+
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 public class Digraph{
@@ -24,54 +24,7 @@ public class Digraph{
 		size++;
 	}
 
-
 	public void processTriple(int comp1, int comp2, int time){
-
-		// CompNode first = new CompNode(comp1, time);
-		// CompNode second = new CompNode(comp2, time);
-		// CompNode firstClone = null;
-		// CompNode secondClone = null;
-
-		// if ( (computerList[comp1] == null) || (first.getTime() != computerList[comp1].getTime()) ){
-		// 	add(first);
-		// }
-		// else{
-		// 	first = nodeGraph[computerList[comp1].getLocation()];
-		// }
-
-		// if ( (computerList[comp2] == null) || (second.getTime() != computerList[comp2].getTime()) ){
-		// 	add(second);
-		// }
-		// else{
-		// 	second = nodeGraph[computerList[comp2].getLocation()];
-		// }
-
-		// firstClone = first.clone();
-		// secondClone = second.clone();
-		// nodeGraph[first.getLocation()].add(secondClone);
-		// nodeGraph[second.getLocation()].add(firstClone);
-
-
-		// if (computerList[comp1] == null){
-		// 	computerList[comp1] = firstClone;
-		// }
-		// else{
-		// 	CompNode tempOld = nodeGraph[computerList[comp1].getLocation()];
-		// 	CompNode tempNew = firstClone;
-		// 	tempOld.add(firstClone);
-		// 	computerList[comp1] = tempNew;
-		// }
-		// if (computerList[comp2] == null){
-		// 	computerList[comp2] = secondClone;
-		// }
-		// else{
-		// 	CompNode tempOld = nodeGraph[computerList[comp2].getLocation()];
-		// 	CompNode tempNew = secondClone;
-		// 	tempOld.add(secondClone);
-		// 	computerList[comp2] = tempNew;
-			
-		// }
-
 
 		CompNode first = new CompNode(comp1, time);
 		CompNode second = new CompNode(comp2, time);
@@ -92,36 +45,11 @@ public class Digraph{
 			second = nodeGraph[computerList[comp2].getLocation()];
 		}
 
-
-		// if ( (computerList[comp1] == null) || (first.getTime() != computerList[comp1].getTime()) ){
-		// 	add(first);
-		// }
-		// else{
-		// 	first = nodeGraph[computerList[comp1].getLocation()];
-		// }
-
-		// if ( (computerList[comp2] == null) || (second.getTime() != computerList[comp2].getTime()) ){
-		// 	add(second);
-		// }
-		// else{
-		// 	second = nodeGraph[computerList[comp2].getLocation()];
-		// }
-
-		System.out.println("Location of first is " + first.getLocation());
-
-
 		firstClone = first.clone();
-
-System.out.println("Location of clone is " + firstClone.getLocation());
-
 		secondClone = second.clone();
 
 		first.add(secondClone);
 		second.add(firstClone);
-
-		
-
-		
 
 		if (computerList[comp1] == null){
 			computerList[comp1] = firstClone.clone();
@@ -156,23 +84,23 @@ System.out.println("Location of clone is " + firstClone.getLocation());
 
 	public boolean checkVirus(int compStart, int compEnd, int timeStart, int timeEnd){
 		CompNode start = findStart(compStart, timeStart);
+		if (compStart == compEnd){
+			return true;
+		}
 		return BFS(start, compEnd, timeEnd);
 	}
 
 	public CompNode findStart(int comp, int time){
 		CompNode start;
-
 		for (int i = 0; i < size; i++){
 			CompNode temp = nodeGraph[i];
 			if (temp.getComputer() == comp){
 				if (temp.getTime() >= time){
 					start = nodeGraph[i];
-
 					return start;
 				}
 			}
 		}
-
 		return null;
 	}
 
@@ -181,22 +109,21 @@ System.out.println("Location of clone is " + firstClone.getLocation());
 		start = nodeGraph[start.getLocation()];
 		start.makeDiscovered();
 
+		if (start.getTime() >= timeEnd){
+			return true;
+		}
+
+
 		Queue<CompNode> BFSQueue = new LinkedList();
 
 		BFSQueue.add(start);
 		while (!BFSQueue.isEmpty()){
 			CompNode temp = BFSQueue.remove();
-			System.out.println("STARTING IN BFS QUEUES");
-			temp.printInfo();
-
 			while (temp.getNext() != null){
 				temp = temp.getNext();	
 				if (!nodeGraph[temp.getLocation()].checkDiscovered()){
 					if (temp.getComputer() == compEnd){
-						System.out.println("NODE FOUND");
-						System.out.println("NODE TIME IS " + temp.getTime());
 						if (temp.getTime() <= timeEnd){
-							System.out.println("computer is " + temp.getComputer() + " time is " + temp.getTime());
 							return true;
 						}
 					}

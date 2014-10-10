@@ -25,7 +25,6 @@ public class VirusTest{
 		Digraph nodeGraph = new Digraph(computers, triples);
 
 		for (int i = 0; i < triples; i++){
-
 			line = textFile.readLine();
 			String[] splitted = line.split("\\s+");
 			int comp1 = Integer.parseInt(splitted[0]);
@@ -33,13 +32,7 @@ public class VirusTest{
 			int time = Integer.parseInt(splitted[2]);
 
 			nodeGraph.processTriple(comp1, comp2, time);
-
-			System.out.println("--------------------------------------------------------------- " + (i+1));
-			nodeGraph.printAll();
-
 		}
-
-		// nodeGraph.printAll();
 
 		int startComputer, endComputer, startTime, endTime;
 

@@ -90,6 +90,7 @@ public class CompNode{
 	/** Sets the location of the node in the adjacency list */
 	public void setLocation(int l) { location = l; }
 
+	/** Returns whether or not a node is discovered */
 	public boolean checkDiscovered() { return discovered; }
 
 }
