@@ -34,9 +34,12 @@ public class VirusTest{
 
 			nodeGraph.processTriple(comp1, comp2, time);
 
+			System.out.println("--------------------------------------------------------------- " + (i+1));
+			nodeGraph.printAll();
+
 		}
 
-		nodeGraph.printAll();
+		// nodeGraph.printAll();
 
 		int startComputer, endComputer, startTime, endTime;
 

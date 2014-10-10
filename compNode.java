@@ -3,47 +3,38 @@ public class CompNode{
 	protected int computer;
 	protected int time;
 	protected boolean discovered = false;
-	protected CompNode location;		
+	protected int location;		
 	protected CompNode next = null;
 	protected CompNode last = null;
-
-	// public CompNode(){
-	// 	this(null, null, null, null);
-	// }
 
 	public CompNode(int c, int t){
 		computer = c;
 		time = t;
-		location = null;
 		next = null;
 	}
 
-	public CompNode(int c, int t, CompNode l){
+	public CompNode(int c, int t, int l){
 		computer = c;
 		time = t;
 		location = l;
 		next = null;
+		last = null;
 	}
 
-	// public compNode(int c, int t, compNode l, compNode n){
-	// 	computer = c;
-	// 	time = t;
-	// 	location = l;
-	// 	next = n;
-	// }
-
-	// public boolean compareTo(compNode<E> other){
-	// 	boolean sameComp = (computer == other.getComputer());
-	// 	boolean sameTime = (time == other.getTime());
-	// 	return (sameCompt && sameTime);
-	// }
+	public CompNode(int c, int t, int l, CompNode n, CompNode end){
+		computer = c;
+		time = t;
+		location = l;
+		next = n;
+		last = end;
+	}
 
 	public CompNode clone(){
-		CompNode copy = new CompNode(computer, time, location);
+		CompNode copy = new CompNode(computer, time, location, null, null);
 		return copy;
 	}
 
-	public void add2(CompNode node){
+	public void add(CompNode node){
 		if (last == null){
 			last = node;
 			setNext(last);
@@ -55,12 +46,10 @@ public class CompNode{
 	}
 
 	public void printInfo(){
-
 		System.out.println("computer is " + computer);
 		System.out.println("time is " + time);
 		System.out.println("status is " + discovered);
 		System.out.println("location is " + location);
-
 	}
 
 	public void printChain(){
@@ -72,7 +61,6 @@ public class CompNode{
 			temp = temp.getNext();
 		}
 		System.out.println("End chain");
-
 	}
 
 	/** Mark a node as discovered */
@@ -88,7 +76,7 @@ public class CompNode{
 	public int getTime() { return time; }
 
 	/** Returns the location of the node in the adjacency list */
-	public CompNode getLocation(){ return location; }
+	public int getLocation(){ return location; }
 
 	/** Returns the next node of this node */
 	public CompNode getNext() { return next; }
@@ -100,7 +88,7 @@ public class CompNode{
 	public void setLast(CompNode l) { last = l; }
 
 	/** Sets the location of the node in the adjacency list */
-	public void setLocation(CompNode l) { location = l; }
+	public void setLocation(int l) { location = l; }
 
 	public boolean checkDiscovered() { return discovered; }
 
